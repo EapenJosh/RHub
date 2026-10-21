@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>SLA Facilitator Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#009494; --teal-dark:#004343; --teal-hi:#94e3e3;
+  --bg:#111313; --surface:#181c1c; --surface-2:#1f2424; --line:#2a3030;
+  --text:#e9eeee; --text-2:#a3aeae; --muted:#6c7878; --warn:#e6a23c;
+  --ombre:linear-gradient(180deg,#009494 0%,#004343 100%);
+  --r:12px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.55 "Nunito Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:2px solid var(--teal-hi);outline-offset:2px;border-radius:6px}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(17,19,19,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.mark{display:flex;align-items:center;gap:10px;font-weight:900;white-space:nowrap}
+.mono{width:32px;height:32px;border-radius:8px;background:var(--ombre);display:grid;place-items:center;font-size:12px;color:#fff}
+.mark small{font-weight:300;color:var(--muted)}
+nav.top{display:flex;gap:2px}
+nav.top a{padding:6px 11px;border-radius:999px;color:var(--text-2);font-size:14px;font-weight:600}
+nav.top a:hover{color:var(--text);background:var(--surface)}
+.sfake{margin-left:auto;display:flex;align-items:center;gap:10px;width:260px;height:38px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:14px;cursor:text}
+.sfake:hover{border-color:var(--teal)}
+.sfake svg{width:15px;height:15px;flex:none}
+.sfake kbd{margin-left:auto;font:600 11px "Nunito Sans";border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+
+/* quick links */
+.quick{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;padding:24px 0 8px}
+.q{display:flex;flex-direction:column;gap:8px;padding:14px 12px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);transition:border-color .15s}
+.q:hover{border-color:var(--teal)}
+.q svg{width:20px;height:20px;stroke:var(--teal-hi)}
+.q b{font-size:13px;font-weight:700;line-height:1.25}
+.q small{font-size:11px;color:var(--muted);margin-top:-6px}
+.q.admin{background:linear-gradient(180deg,rgba(0,148,148,.2),rgba(0,67,67,.14));border-color:rgba(0,148,148,.45)}
+
+/* layout */
+.row{display:grid;grid-template-columns:1fr 360px;gap:20px;margin-top:20px;align-items:start}
+section{scroll-margin-top:76px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.head{display:flex;align-items:baseline;gap:12px;margin:0 0 14px}
+.head .n{background:var(--teal);color:#fff;font-weight:700;font-size:11px;padding:2px 10px;border-radius:3px}
+h2{font-size:22px;font-weight:900;margin:0}
+.head small{color:var(--muted);font-size:13px}
+.head a.more{margin-left:auto;font-size:13px;font-weight:700;color:var(--teal-hi)}
+
+/* this week */
+.side{position:sticky;top:76px}
+.week{padding:18px 20px}
+.week::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;background:var(--ombre)}
+.week{position:relative}
+.wtop{display:flex;align-items:baseline;justify-content:space-between}
+.wtop b{font-size:26px;font-weight:900}
+.wtop span{font-size:13px;color:var(--muted)}
+.wsub{font-size:13px;color:var(--text-2);margin:2px 0 14px}
+.week h4{margin:14px 0 6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-hi)}
+.week ul{margin:0;padding:0;list-style:none;display:grid;gap:7px}
+.week li{display:flex;gap:9px;font-size:14px;line-height:1.45}
+.week li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:7px}
+.week li.due::before{background:var(--warn)}
+.week li a{color:var(--teal-hi);font-weight:600}
+.week li a:hover{text-decoration:underline}
+.wfoot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.wfoot a{color:var(--teal-hi);font-weight:700;font-size:13px}
+
+/* idea bank */
+.ideas{padding:18px 20px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.tools input[type=search]{flex:1;min-width:180px;height:36px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--text);padding:0 14px;font:inherit;font-size:14px;outline:none}
+.tools input[type=search]:focus{border-color:var(--teal)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--text-2);cursor:pointer}
+.chip:hover{border-color:var(--teal)}
+.chip[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+.toggle{font-size:13px;color:var(--text-2);display:flex;gap:6px;align-items:center;cursor:pointer;margin-left:auto}
+.toggle input{accent-color:var(--teal);width:15px;height:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.idea{display:flex;flex-direction:column;gap:6px;padding:14px;border-radius:10px;background:var(--bg);border:1px solid var(--line);transition:border-color .15s}
+.idea:hover{border-color:var(--teal)}
+.idea .tag{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--teal-hi);display:flex;gap:8px}
+.idea .tag i{font-style:normal;color:var(--muted)}
+.idea b{font-size:15px;font-weight:700}
+.idea p{margin:0;font-size:13px;color:var(--text-2);font-weight:300;flex:1}
+.idea small{font-size:12px;color:var(--muted)}
+.count{font-size:12px;color:var(--muted);margin-top:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.count button{background:none;border:0;color:var(--teal-hi);font-weight:700;cursor:pointer;padding:0}
+
+/* library */
+.lib{padding:18px 20px;margin-top:20px}
+.weeks{display:grid;gap:6px}
+.wk{display:grid;grid-template-columns:70px 1fr;gap:12px;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid transparent}
+.wk.now{border-color:rgba(0,148,148,.55)}
+.wk .wn{font-weight:900;font-size:13px;padding-top:5px}
+.wk .wn small{display:block;font-size:10px;color:var(--teal-hi);letter-spacing:.06em;text-transform:uppercase}
+.wk ul{list-style:none;margin:0;padding:0;display:grid}
+.wk li a{display:flex;gap:10px;padding:5px 8px;border-radius:6px;font-size:14px}
+.wk li a:hover{background:var(--surface-2)}
+.wk li .t{flex:1}
+.wk li .m{font-size:11px;color:var(--muted)}
+.star{color:var(--warn)}
+
+/* directory */
+.dir{margin:40px 0 20px}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:20px 24px}
+.col h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-hi);margin:0 0 8px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.col ul{list-style:none;margin:0;padding:0}
+.col a{display:block;padding:5px 0;font-size:14px;color:var(--text)}
+.col a:hover{color:var(--teal-hi)}
+.col a small{color:var(--muted);font-size:12px;margin-left:6px}
+.lt{margin-top:8px;font-size:11px;font-weight:700;color:var(--warn);letter-spacing:.06em}
+
+/* search */
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--text);padding:0;width:min(640px,92vw);max-height:80vh}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+.dhead{padding:10px;border-bottom:1px solid var(--line)}
+.dhead input{width:100%;height:44px;border:0;background:transparent;color:var(--text);font:inherit;font-size:17px;outline:none;padding:0 8px}
+.results{list-style:none;margin:0;padding:8px;overflow:auto;max-height:60vh}
+.results a{display:block;padding:9px 12px;border-radius:8px}
+.results a.sel,.results a:hover{background:var(--surface-2)}
+.results small{display:block;color:var(--muted);font-size:12px}
+.results .none{padding:14px 12px;color:var(--text-2)}
+
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:13px;padding:18px 0 36px;margin-top:20px}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:1000px){
+  .quick{grid-template-columns:repeat(4,1fr)}
+  .row{grid-template-columns:1fr}
+  .side{position:static}
+  .side{order:-1}
+  .cols{grid-template-columns:repeat(2,1fr)}
+  nav.top{display:none}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .sfake{width:auto;flex:1}
+  .sfake kbd,.mark small{display:none}
+  .quick{grid-template-columns:repeat(2,1fr)}
+  .cols{grid-template-columns:1fr}
+  .wk{grid-template-columns:1fr;gap:2px}
+  .toggle{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="mark" href="#top"><span class="mono">SLA</span>Facilitator Hub <small>\ GVSU</small></a>
+    <nav class="top">
+      <a href="#ideas">Ideas</a>
+      <a href="#library">Past sessions</a>
+      <a href="#directory">All links</a>
+    </nav>
+    <button class="sfake" id="openSearch" aria-label="Search the hub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search everything<kbd>/</kbd></button>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+
+  <div class="quick" id="quick"></div>
+
+  <div class="row">
+    <div class="main">
+      <section id="ideas" class="card ideas">
+        <div class="head"><span class="n">01</span><h2>Idea bank</h2><small id="ideaCount"></small></div>
+        <div class="tools">
+          <input type="search" id="iq" placeholder="Search activities, like whiteboard or review" aria-label="Search activities">
+          <label class="toggle"><input type="checkbox" id="noTech"> No tech needed</label>
+        </div>
+        <div class="chips" id="purposes" style="margin-bottom:14px"></div>
+        <div class="grid" id="ideaGrid"></div>
+        <div class="count"><span id="ideaShown"></span><button id="ideaMore" hidden></button></div>
+      </section>
+
+      <section id="library" class="card lib">
+        <div class="head"><span class="n">02</span><h2>Past sessions</h2><small>by course and week, starting near now</small></div>
+        <div class="tools">
+          <div class="chips" id="courses"></div>
+          <label class="toggle"><input type="checkbox" id="starOnly"> Starred only</label>
+        </div>
+        <div class="weeks" id="weeks"></div>
+        <div class="count"><span>Sample from Winter 2026 MTH folders. The full index builds itself weekly.</span><button id="allWeeks" hidden></button></div>
+      </section>
+    </div>
+
+    <aside class="side">
+      <section class="card week" id="week" aria-label="This week">
+        <div class="wtop"><b id="wkNum">Week</b><span id="wkDates"></span></div>
+        <div class="wsub" id="wkTag"></div>
+        <div id="wkBody"></div>
+        <div class="wfoot"><span>Posted from the weekly checklist</span><a id="wkLink" target="_blank" rel="noopener">Full checklist →</a></div>
+      </section>
+    </aside>
+  </div>
+
+  <section id="directory" class="dir">
+    <div class="head"><span class="n">03</span><h2>All links</h2><small>everything else, one click away</small></div>
+    <div class="cols" id="cols"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>SLA Facilitator Hub \ Prototype</span>
+    <span>Something missing or broken? Tell your Peer Mentor.</span>
+  </div>
+</footer>
+
+<dialog id="search" aria-label="Search the hub">
+  <div class="dhead"><input id="sq" type="search" placeholder="Search links, activities, and past sessions" autocomplete="off"></div>
+  <ul class="results" id="results"></ul>
+</dialog>
+
+<script>
+/* ===================== CONTENT ===================== */
+const SEMESTER = {start:"2026-08-31", weeks:16};
+const G="https://drive.google.com/open?id=", F="https://drive.google.com/drive/folders/", OLD="https://sites.google.com/mail.gvsu.edu/slaresourcehub/";
+const TEMPLATE="https://docs.google.com/spreadsheets/d/1yb3qllpQqcCw6xC0JOdswSGoUJU4MBl49wMtICM8ZrA/copy";
+const NAVIGATE="https://www.gvsu.edu/navigate";
+
+const QUICK = [
+  {t:"Attendance template", s:"Make your copy once", u:TEMPLATE, i:"check", admin:1},
+  {t:"Navigate", s:"Log by Friday", u:NAVIGATE, i:"nav", admin:1},
+  {t:"Workday", s:"Hours and pay", u:"https://www.myworkday.com/wday/authgwy/gvsu/login.htmld", i:"clock"},
+  {t:"Request time off", s:"One per session", u:"https://airtable.com/app6IEAIcyXgP3N9t/pagsTN0x0S5MXXykx/form", i:"cal"},
+  {t:"My Drive folder", s:"Fall 2026 folders", u:F+"1UtMEIzXwOB4UUdERad3OUV6yR5gnb88U", i:"folder"},
+  {t:"Planning form", s:"New copy weekly", u:"https://drive.google.com/file/d/11RrYFYOdBYfNhjzlZ3hhxgafYM7uMdlf/view", i:"doc"},
+  {t:"Missed session emails", s:"Templates", u:G+"1UH7EDhrwKfNkx691YcuNGOpA-ucQpVc5ioQaOFq27Tk", i:"mail"},
+  {t:"Semester calendar", s:"Fall 2026 dates", u:"https://docs.google.com/document/d/1LAQgSqYmTXvF5mgnFfZMlGse1CZRYPn8jU1L1NjW1Yo/edit", i:"grid"}
+];
+
+/* This week: the indexer copies this from the weekly checklist doc each Monday. */
+const CHECKLIST = {
+  week:8, dates:"Oct 19 to 24", tag:"Halfway there.", doc:"1u_2BcJWEJU0dUsmjVJd-OEM7bkIZ-gYz1V-iPUzxbag",
+  sections:[
+    {h:"Happening this week", items:[
+      {t:"No pod meetings. Next one is the week of 10/26 (Fall Break)."},
+      {t:"Observations round 2 continue."},
+      {t:"Make sure your hours are in Workday."},
+      {t:"Fill out the <a href='https://docs.google.com/forms/d/e/1FAIpQLSel7TMiI72USGpRVJrocHNJduOOy6Ndrp4BC_6VEYqsYwvDYA/viewform' target='_blank' rel='noopener'>Winter availability form</a> if you haven't yet. Draft schedule goes out this week.", due:1}
+    ]},
+    {h:"New facilitators", items:[
+      {t:"Schedule a 1 on 1 with Melanie: <a href='mailto:rabinejm@gvsu.edu'>rabinejm@gvsu.edu</a>"}
+    ]},
+    {h:"Prep and facilitate", items:[
+      {t:"Upload your planning form, slides, and handouts to your facilitator folder."},
+      {t:"Try something new from the <a href='#ideas'>Idea bank</a> or the <a href='https://drive.google.com/file/d/1kaq-LDhmIufaQbWIoLlt6hh-q20D_FC_/view' target='_blank' rel='noopener'>Bingo card</a>."},
+      {t:"Check in with your SLA professor."}
+    ]},
+    {h:"Attendance", items:[
+      {t:"Update your attendance sheet and email anyone who missed."},
+      {t:"Enter attendance in <a href='https://www.gvsu.edu/navigate' target='_blank' rel='noopener'>Navigate</a> by end of day Friday.", due:1}
+    ]}
+  ]
+};
+
+const PURPOSES = ["Warm up","Review","Check understanding","Collaborate","Reflect","Study skills"];
+const IDEAS = [{"n": "Connections", "p": "Warm up", "s": "Free online generator", "d": "Build a Connections style puzzle: four groups of four related course terms for students to sort.", "x": 1, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Two Truths and a Lie", "p": "Warm up", "s": "Paper or notecards", "d": "Students write two true statements and one false one; the room finds the lie and fixes it.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Matching Game", "p": "Warm up", "s": "Printed term and definition cards", "d": "Hand out cut up cards; students find their match. Doubles as a way to pair people up.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Show a Video", "p": "Warm up", "s": "Projector", "d": "A short concept video, then each student jots three takeaways to discuss.", "x": 1, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Deconstructing Words", "p": "Warm up", "s": "Whiteboard", "d": "Break hard vocab into prefix, stem, and suffix until students do it on their own.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Brain Dump", "p": "Review", "s": "Whiteboard markers", "d": "Write a few big concepts on the board; students pass the marker and add everything they remember.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Concept Map", "p": "Review", "s": "Whiteboard markers", "d": "Break a concept into definitions, examples, and processes, built from what students call out.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Venn Diagram", "p": "Review", "s": "Whiteboard markers", "d": "Overlapping circles for two or three concepts; students fill in similarities and differences.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Snowball Review", "p": "Review", "s": "Notebook paper", "d": "Everyone writes a question, balls it up, throws it, then answers the one they catch.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Relay Race", "p": "Review", "s": "Whiteboards and markers", "d": "Teams pass one marker, solving projected problems in order. First team to finish correctly wins.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Pass the Problem", "p": "Review", "s": "Worksheet", "d": "Each student works a set time, then passes the sheet on and the next person picks up where they left off.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Crossword Puzzle", "p": "Review", "s": "Free online generator, printer", "d": "Generate a crossword from key terms; hand it out and go over answers at the end.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Jeopardy", "p": "Review", "s": "Factile (shared login, ask your PM)", "d": "Teams pick categories and point values; other teams can steal wrong answers.", "x": 1, "u": "https://docs.google.com/presentation/d/1JB3G1ica6Ec622bc9mDxPtUEo_wGh-wn7Fi801m0olM/edit"}, {"n": "Murder Mystery", "p": "Review", "s": "Slides template", "d": "Students solve review problems to unlock clues. Great before an exam.", "x": 1, "u": "https://docs.google.com/presentation/d/1YDcsLauYqoaeDUTYZXbI8Toor6cwVbHItdYNtVo9XQo/edit"}, {"n": "Whiteboard Warriors", "p": "Review", "s": "Slides template, whiteboards", "d": "Team whiteboard battle on projected questions.", "x": 0, "u": "https://docs.google.com/presentation/d/1DPB61PFLnvinmdDu-sbhPxU1E9QgXF0UPZo17ys0lKg/edit"}, {"n": "Mock Exam", "p": "Review", "s": "Slides template", "d": "Run a timed practice exam, then work through the answers together.", "x": 0, "u": "https://docs.google.com/presentation/d/131Z8UmdwgZZaWDDJZX5V5hGl2o6Q-nHg1lkxi3A5rew/edit"}, {"n": "SLA Feud", "p": "Review", "s": "Printable board and key", "d": "Family Feud style survey game for review.", "x": 0, "u": "https://drive.google.com/open?id=1T2TbxQUrkaLdt7A4mveh0pvP_ZDPPTj-"}, {"n": "Whiteboard Voting", "p": "Check understanding", "s": "Mini whiteboards (supply request)", "d": "Ask a question; everyone writes an answer and holds it up at once.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Notecard Response", "p": "Check understanding", "s": "Notecards", "d": "Quick written answers to a prompt. Can be anonymous or double as attendance.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Poll Everywhere", "p": "Check understanding", "s": "Free account", "d": "Live poll students join by QR code; responses show up on screen.", "x": 1, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Kahoot", "p": "Check understanding", "s": "Free account", "d": "Fast live quiz game students join with a pin.", "x": 1, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Gimkit", "p": "Check understanding", "s": "Free account", "d": "Live quiz game; Don't Look Down mode is a good first pick.", "x": 1, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Blooket", "p": "Check understanding", "s": "Free account", "d": "Quiz game with playful modes; Fishing Frenzy explains itself.", "x": 1, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Quizizz", "p": "Check understanding", "s": "Free account", "d": "Self paced live quiz students join at joinmyquiz.com.", "x": 1, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Quizlet", "p": "Check understanding", "s": "Free account", "d": "Flashcard set shared by QR code; students review in game modes for a few minutes.", "x": 1, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Google Form Check In", "p": "Check understanding", "s": "Google Form", "d": "Quick form by QR code; read responses live to see where students are.", "x": 1, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Think Pair Share", "p": "Collaborate", "s": "None", "d": "Think alone for a set time, discuss with a partner, then share out.", "x": 0, "u": "https://drive.google.com/file/d/1RaDoNvSKSyGXh9IVQ7tfkUlHv3kAagPD/view"}, {"n": "Jigsaw", "p": "Collaborate", "s": "None", "d": "Each small group masters one piece of a topic, then teaches it to the room.", "x": 0, "u": "https://drive.google.com/file/d/1RaDoNvSKSyGXh9IVQ7tfkUlHv3kAagPD/view"}, {"n": "Clusters", "p": "Collaborate", "s": "Board space or chart paper", "d": "Small groups discuss a prompt, record key points, and report back.", "x": 0, "u": "https://drive.google.com/file/d/1RaDoNvSKSyGXh9IVQ7tfkUlHv3kAagPD/view"}, {"n": "Turn to a Partner", "p": "Collaborate", "s": "None", "d": "Partners talk through a problem right away. Best once students have the background.", "x": 0, "u": "https://drive.google.com/file/d/1RaDoNvSKSyGXh9IVQ7tfkUlHv3kAagPD/view"}, {"n": "Assigned Discussion Leader", "p": "Collaborate", "s": "None", "d": "A student reviews a topic and leads the group discussion on it.", "x": 0, "u": "https://drive.google.com/file/d/1RaDoNvSKSyGXh9IVQ7tfkUlHv3kAagPD/view"}, {"n": "Small Group Posters", "p": "Collaborate", "s": "Poster Post Its, markers (supply request)", "d": "Groups of three work a prompt on a poster, then present it.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Group Worksheet", "p": "Collaborate", "s": "Worksheet", "d": "Pairs or small groups complete one worksheet together.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "FigJam Board", "p": "Collaborate", "s": "Free account", "d": "Shared online whiteboard students edit by QR code.", "x": 1, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "3 2 1", "p": "Reflect", "s": "Notecards or form", "d": "Three things learned, two to review, one they feel confident about.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Anonymous Questions", "p": "Reflect", "s": "Notecards or form", "d": "Students submit questions anonymously; answer them in the last 10 to 15 minutes.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Post Exam Reflection", "p": "Reflect", "s": "Worksheet", "d": "How confident were you, how did you study, what will you change next time.", "x": 0, "u": "https://drive.google.com/open?id=1IGXbCqGmETy7RfnpClQp-z_mLBVEnskM"}, {"n": "Triangle Circle Square", "p": "Reflect", "s": "Half sheet", "d": "Something that squared with you, something still circling, three key points.", "x": 0, "u": "https://drive.google.com/open?id=1PqeIDQduMJT7l37-4Jz_ltOUCmeCcY-O"}, {"n": "SMART Goals", "p": "Reflect", "s": "Goal worksheet", "d": "Students set one specific, measurable study goal for the next exam.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}, {"n": "Retrieval Practice", "p": "Study skills", "s": "Ready made slides", "d": "Teach students to pull info from memory instead of rereading notes.", "x": 0, "u": "https://drive.google.com/drive/folders/17R-Awe6UetCp7JzC0tfhnPUtJi351jyd"}, {"n": "Spaced Practice", "p": "Study skills", "s": "Ready made slides", "d": "Why cramming fails and how to space out studying.", "x": 0, "u": "https://drive.google.com/drive/folders/17R-Awe6UetCp7JzC0tfhnPUtJi351jyd"}, {"n": "Interleaving", "p": "Study skills", "s": "Ready made slides", "d": "Mixing problem types to build flexible understanding.", "x": 0, "u": "https://drive.google.com/drive/folders/17R-Awe6UetCp7JzC0tfhnPUtJi351jyd"}, {"n": "Dual Coding", "p": "Study skills", "s": "Ready made slides", "d": "Pairing words with visuals so ideas stick.", "x": 0, "u": "https://drive.google.com/drive/folders/17R-Awe6UetCp7JzC0tfhnPUtJi351jyd"}, {"n": "Visuals and Models", "p": "Study skills", "s": "Models from TRC or your department", "d": "Hands on models and posters to show the big picture.", "x": 0, "u": "https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"}];
+const LIBRARY = [{"c": "MTH 108", "w": 2, "t": "Qualitative Graphs", "s": "W26", "u": "https://drive.google.com/drive/folders/1Y4zv7m8qwBUBzRXVhRsMQjOKOlJOfvmC", "f": false}, {"c": "MTH 108", "w": 3, "t": "Graphing Linear Equations", "s": "W26", "u": "https://drive.google.com/drive/folders/1EcTjRWYDr6yhfZGFUL3_kebogzlrvZ_O", "f": false}, {"c": "MTH 108", "w": 3, "t": "Linear Equations", "s": "W26", "u": "https://drive.google.com/drive/folders/1xXdSSmvJVqr99Mk4HT7apZX0IUd8y6Av", "f": false}, {"c": "MTH 108", "w": 4, "t": "Slope of a Line", "s": "W26", "u": "https://drive.google.com/drive/folders/12Q1JfEy5m45zJ6fWNS4ChyXLPji5tTOX", "f": false}, {"c": "MTH 108", "w": 4, "t": "X&Y intercepts", "s": "W26", "u": "https://drive.google.com/drive/folders/1nDpomF11zA57RhHkEAfYW7fyclT9I33f", "f": false}, {"c": "MTH 108", "w": 5, "t": "Finding Linear Equations", "s": "W26", "u": "https://drive.google.com/drive/folders/1OlrlkoOA8mXbYGS9IjO5Rghh0kD_nExC", "f": false}, {"c": "MTH 108", "w": 5, "t": "Simplifying", "s": "W26", "u": "https://drive.google.com/drive/folders/14T6bVblOaJ_6yRrifWz7cq-JOQ96MMMx", "f": false}, {"c": "MTH 108", "w": 6, "t": "Linear Story Problems", "s": "W26", "u": "https://drive.google.com/drive/folders/1RXZNZJsk4TxVNGojc8GpU5hjouw9oJ_q", "f": false}, {"c": "MTH 108", "w": 6, "t": "Solving Systems of Equations", "s": "W26", "u": "https://drive.google.com/drive/folders/1FkPhcaeUJIp08l385oktA8HAhPizAU2K", "f": false}, {"c": "MTH 108", "w": 7, "t": "Solving Systems by Substitution", "s": "W26", "u": "https://drive.google.com/drive/folders/1TmkxQXQ6_Kt67OyUpSXi7rXdIbM4MUZG", "f": false}, {"c": "MTH 108", "w": 7, "t": "System of Equations", "s": "W26", "u": "https://drive.google.com/drive/folders/1cF9RVhdolpi0TndiFj6LkcZmDGy4PUo9", "f": false}, {"c": "MTH 108", "w": 9, "t": "Solving Systems by Elimination", "s": "W26", "u": "https://drive.google.com/drive/folders/1j3BhLVso3NskQ3LtDT_TbQ__OBnnx9fX", "f": true}, {"c": "MTH 108", "w": 10, "t": "Elimination", "s": "W26", "u": "https://drive.google.com/drive/folders/1DhYhnqzVT47DH8RkIX04ItOSl087KZcF", "f": false}, {"c": "MTH 108", "w": 10, "t": "Function Notation", "s": "W26", "u": "https://drive.google.com/drive/folders/1JMGcX9tBpwkkqt8LzafW-bJpP5V-sTQm", "f": false}, {"c": "MTH 108", "w": 11, "t": "Functions Review", "s": "W26", "u": "https://drive.google.com/drive/folders/15ZJCECvorBMxnh5R_EDXy4cqlyqvzp8H", "f": false}, {"c": "MTH 108", "w": 11, "t": "System Story Problems", "s": "W26", "u": "https://drive.google.com/drive/folders/1aySNDsnxfqhLAzN3CSH-PaxQZgoCKAgQ", "f": false}, {"c": "MTH 108", "w": 12, "t": "Composition of Functions", "s": "W26", "u": "https://drive.google.com/drive/folders/1Y6nH0ITs5Zbb08gkIvJ5Q994fGJJEHZq", "f": false}, {"c": "MTH 108", "w": 12, "t": "Functions", "s": "W26", "u": "https://drive.google.com/drive/folders/1wkfJRRTq-ot-Rt5p3wpjaFwusF1e36vl", "f": false}, {"c": "MTH 108", "w": 13, "t": "Functions with tables/graphs", "s": "W26", "u": "https://drive.google.com/drive/folders/1qm3b64Ts27Cx9O_axCjKN8vHzCfX9ZC9", "f": false}, {"c": "MTH 108", "w": 13, "t": "Using Lines to Model Data", "s": "W26", "u": "https://drive.google.com/drive/folders/1ODRSuKXwGee5L6WR_RMbLB18ElCGhkKY", "f": false}, {"c": "MTH 108", "w": 14, "t": "Final Exam Review", "s": "W26", "u": "https://drive.google.com/drive/folders/1WMlx6XfIYzaOVhNwcA011SYVsLTC4wS4", "f": false}, {"c": "MTH 108", "w": 14, "t": "Inverse Functions", "s": "W26", "u": "https://drive.google.com/drive/folders/1GP4r0AZ1YFNh46jpxIeJOtxsRZ3Wm47n", "f": false}, {"c": "MTH 108", "w": 15, "t": "Finals", "s": "W26", "u": "https://drive.google.com/drive/folders/1SvlWO8BhGcgPUL9C4EUHYEFWE3ESETD3", "f": false}, {"c": "MTH 109", "w": 2, "t": "Linear Functions Review", "s": "W26", "u": "https://drive.google.com/drive/folders/1v9rThMTUxUKCY0U2yEpOhsFC2aGxK_ED", "f": false}, {"c": "MTH 109", "w": 2, "t": "Linear Tables and Equations", "s": "W26", "u": "https://drive.google.com/drive/folders/17jdqDL1WhAruF9gOSFLc62-p2srGDHYy", "f": false}, {"c": "MTH 109", "w": 2, "t": "Review from MTH 108", "s": "W26", "u": "https://drive.google.com/drive/folders/165E-H5k1wVV1pXaEijclGbgNB4hEIPEz", "f": false}, {"c": "MTH 109", "w": 3, "t": "CC review", "s": "W26", "u": "https://drive.google.com/drive/folders/1pYtO2fEoHWAgUQcIZOdnX51fxCtP41Fp", "f": false}, {"c": "MTH 109", "w": 3, "t": "Linear and Exponentials", "s": "W26", "u": "https://drive.google.com/drive/folders/10drFU9mB0fYyZMUopb2EMvFNc7OnUV8T", "f": false}, {"c": "MTH 109", "w": 3, "t": "Study Strategies and Support Services", "s": "W26", "u": "https://drive.google.com/drive/folders/1kIslgUaWNVucQXPkRV7vqrCZ0zfv_ypE", "f": false}, {"c": "MTH 109", "w": 4, "t": "Exponential Functions", "s": "W26", "u": "https://drive.google.com/drive/folders/1CJAQtVFCaeBcYcPcAEOC9sanaj7e0hRv", "f": false}, {"c": "MTH 109", "w": 4, "t": "Exponentials", "s": "W26", "u": "https://drive.google.com/drive/folders/1sQIMn6Y9fXeiTeVMV9HhV6Uz3v8VGjzw", "f": false}, {"c": "MTH 109", "w": 4, "t": "Quiz Preparation", "s": "W26", "u": "https://drive.google.com/drive/folders/1T59kYugG63aw-mdICQxZuErPlMJ5qcfS", "f": false}, {"c": "MTH 109", "w": 5, "t": "Exponential Functions and Linear Functions Review", "s": "W26", "u": "https://drive.google.com/drive/folders/1FejbXSN2EVHsGhVbnhuuVQukhRLANMWL", "f": false}, {"c": "MTH 109", "w": 5, "t": "Exponential Graphs", "s": "W26", "u": "https://drive.google.com/drive/folders/1VXjV2SJemdKlWRCuFSGHhnyb8gC08EQC", "f": false}, {"c": "MTH 109", "w": 5, "t": "Mixed Practice", "s": "W26", "u": "https://drive.google.com/drive/folders/1wraCwN8_wYstBqWuHqjx01yTvhHIK4-p", "f": false}, {"c": "MTH 109", "w": 6, "t": "Exponential Growth and Decay & Compound Interest", "s": "W26", "u": "https://drive.google.com/drive/folders/1uWct75BXHkiKPrAiOj_MX_R7T6wHUsXJ", "f": true}, {"c": "MTH 109", "w": 6, "t": "Relative Change", "s": "W26", "u": "https://drive.google.com/drive/folders/1_kcsEHfroJimZ5YIKojRyWXze2ogRZ0i", "f": false}, {"c": "MTH 109", "w": 6, "t": "Review", "s": "W26", "u": "https://drive.google.com/drive/folders/1kmitobR7cNzSl_6TBoFbmgHVYZkRiFiB", "f": false}, {"c": "MTH 109", "w": 7, "t": "Application of Exponents", "s": "W26", "u": "https://drive.google.com/drive/folders/1ZKIzWqO5KUsJPnSmZnZSqIRXZp1vKv7p", "f": false}, {"c": "MTH 109", "w": 7, "t": "Exponential Applications & Inverses", "s": "W26", "u": "https://drive.google.com/drive/folders/1ju390mKy8dfopvzMqw89v9Rmlmt1CYso", "f": false}, {"c": "MTH 109", "w": 7, "t": "Negative Exponents", "s": "W26", "u": "https://drive.google.com/drive/folders/1wcUrxRdz865XZCMnQrpdpFW1RVCXxCz7", "f": false}, {"c": "MTH 109", "w": 8, "t": "Inverses and Logs", "s": "W26", "u": "https://drive.google.com/drive/folders/1LY1-OrbbqWtaM7j50XDuWZ2HtaeADoD3", "f": false}, {"c": "MTH 109", "w": 8, "t": "Line of Best Fit", "s": "W26", "u": "https://drive.google.com/drive/folders/1p4Lhp3hyk4aWtj_I37PMb5WYuIdLcB44", "f": true}, {"c": "MTH 109", "w": 10, "t": "Intro to Log", "s": "W26", "u": "https://drive.google.com/drive/folders/1nJ6Leb7J1msAi_MCtAoTrzBZNqCVZyX4", "f": false}, {"c": "MTH 109", "w": 10, "t": "Scientific Notation and Evaluating Functions", "s": "W26", "u": "https://drive.google.com/drive/folders/1_lcGEd9iuPLk4BMTMcoXUxl3WyZSOTHG", "f": false}, {"c": "MTH 109", "w": 11, "t": "Box Method and Foil", "s": "W26", "u": "https://drive.google.com/drive/folders/1HlYEaOxXW6e8TXlFF_pdOwXfx3sFE4QR", "f": false}, {"c": "MTH 109", "w": 11, "t": "Solving Log", "s": "W26", "u": "https://drive.google.com/drive/folders/1GUWVVGWh3S8CyQo5fRcQYHW9npdpj1mf", "f": false}, {"c": "MTH 109", "w": 11, "t": "Test #1 Review", "s": "W26", "u": "https://drive.google.com/drive/folders/1xbPDs9CjfuHYaUsgEP4N-VAyz7tbgbGA", "f": false}, {"c": "MTH 109", "w": 12, "t": "Quadratic Patterns", "s": "W26", "u": "https://drive.google.com/drive/folders/1vsQ1thECSgTAA-eTair3CkLgpISP_v2W", "f": false}, {"c": "MTH 109", "w": 12, "t": "Reflection", "s": "W26", "u": "https://drive.google.com/drive/folders/1VCsHhkp1a5Hrm_VR4eTshOPMeKf21C2l", "f": false}, {"c": "MTH 109", "w": 13, "t": "Exponential Growth and Decay", "s": "W26", "u": "https://drive.google.com/drive/folders/1OH6WjwWlrYZYsqYzzRrE8OW3DsVKZ1Lx", "f": false}, {"c": "MTH 109", "w": 13, "t": "Quadratic Equation Forms", "s": "W26", "u": "https://drive.google.com/drive/folders/156-DBm8p2Jt2EsfuPVdqDBAndI_7_XC4", "f": false}, {"c": "MTH 109", "w": 14, "t": "Quadratic Applications & Regression", "s": "W26", "u": "https://drive.google.com/drive/folders/13-ZsLj19jOfG-Cvm3VVs-bVXiSNirlC_", "f": false}, {"c": "MTH 109", "w": 14, "t": "Quadratics", "s": "W26", "u": "https://drive.google.com/drive/folders/1zkN8YXxIweTAAI1inC4YpZFYt6Q9TCqb", "f": false}, {"c": "MTH 109", "w": 15, "t": "Exam Review", "s": "W26", "u": "https://drive.google.com/drive/folders/1hRSc-cgj7Je9Lgj50yBC7KibPn6cY6Ly", "f": false}, {"c": "MTH 109", "w": 15, "t": "Finals", "s": "W26", "u": "https://drive.google.com/drive/folders/17NRn_m3mzbHyK8JS3SBitRNwbDoAXB2u", "f": false}, {"c": "MTH 110", "w": 3, "t": "Tiling, Learning Targets 1-3, qualitiative graphs", "s": "W26", "u": "https://drive.google.com/drive/folders/1FZ3iXxR0zrchqJmRGuUgWF6KhEw6axng", "f": false}, {"c": "MTH 110", "w": 4, "t": "Linear Functions, Applications, Regressions", "s": "W26", "u": "https://drive.google.com/drive/folders/1Wb-__06vdAQ624VgsxFywRbQB72GNp_G", "f": false}, {"c": "MTH 110", "w": 5, "t": "Regression, Linear Systems, Function Notation", "s": "W26", "u": "https://drive.google.com/drive/folders/1v6pjkQeiUlwMIH0X-ja6C5v18nvTkLiz", "f": false}, {"c": "MTH 110", "w": 6, "t": "Exponential Patterns and Graphs", "s": "W26", "u": "https://drive.google.com/drive/folders/1M8Y4cvAIHaIrADqS5vgwRc6vajliCP1F", "f": false}, {"c": "MTH 110", "w": 7, "t": "Exponential Functions and Applications", "s": "W26", "u": "https://drive.google.com/drive/folders/1Ax5SCAsoQA0H0pGnVsWo3cyU71gFshwx", "f": false}, {"c": "MTH 110", "w": 8, "t": "Exponential Applications and Regression", "s": "W26", "u": "https://drive.google.com/drive/folders/1BkN13wOAsIK2ZO6wfd1hF4nGMxvpA0p4", "f": false}, {"c": "MTH 110", "w": 9, "t": "Inverses and Logarithms", "s": "W26", "u": "https://drive.google.com/drive/folders/1JAiGmjZQ8ETjN0L1VMrI_4uRdWfkXMWD", "f": false}, {"c": "MTH 110", "w": 10, "t": "Logarithms and Quadratic Patterns", "s": "W26", "u": "https://drive.google.com/drive/folders/1ToxqnxIUEjXbwzVu8Bs-Ed03zFZFPU1Y", "f": false}, {"c": "MTH 110", "w": 11, "t": "Quadratic Graphs, Applications, Regression", "s": "W26", "u": "https://drive.google.com/drive/folders/1dwdp-HkLns33K5ZhtkaEmB4ltRUBgHot", "f": true}, {"c": "MTH 110", "w": 12, "t": "Quadratic Graphs, Applications, Regression", "s": "W26", "u": "https://drive.google.com/drive/folders/1Q1moBDEAfoKuJKa6RjkR43ovs-TNDOHJ", "f": true}, {"c": "MTH 110", "w": 13, "t": "LT 1-15 REVIEW", "s": "W26", "u": "https://drive.google.com/drive/folders/1IOdqm0UoNX2POH03C8N7K3GicqPpFeUb", "f": false}, {"c": "MTH 110", "w": 14, "t": "Final Review Week", "s": "W26", "u": "https://drive.google.com/drive/folders/14mOryuno2MbVq_Jy_AxGTNs2v-rme77V", "f": false}];
+
+const DIRECTORY = [
+  {h:"Attendance", items:[
+    {t:"Attendance template", s:"copy once", u:TEMPLATE},
+    {t:"Navigate", u:NAVIGATE},
+    {t:"How to log in Navigate", s:"PDF", u:G+"1GvHT0P8gS5x-Gn_Ui7QjVkpG5wtaCGIy"},
+    {t:"Missed session emails", u:G+"1UH7EDhrwKfNkx691YcuNGOpA-ucQpVc5ioQaOFq27Tk"}]},
+  {h:"Weekly checklists", items:"CHECKLISTS"},
+  {h:"Planning", items:[
+    {t:"Session planning form", u:"https://drive.google.com/file/d/11RrYFYOdBYfNhjzlZ3hhxgafYM7uMdlf/view"},
+    {t:"Planning form example", u:"https://drive.google.com/file/d/1Ep_c_ChpMISDK36SReg1TEyyzQMGUWhK/view"},
+    {t:"Learning goal fill in the blank", u:"https://drive.google.com/file/d/1C4Fw1u0AKRUWB4erPT-WNJXI9iTJ4vK8/view"},
+    {t:"Learning goal verbs", u:"https://drive.google.com/file/d/1xEB2pkEHWFwUylD7IKU_9qan1ZfG9UFH/view"},
+    {t:"Questions by Bloom's level", u:"https://drive.google.com/file/d/1NGasGHS_kTk8-B1PKSSl0iir3sTuYr5M/view"},
+    {t:"Full activity descriptions", u:"https://docs.google.com/document/d/1JZSQVvsZOt3DRwk-5WvkmDqfCB_7Xu7hP3Kc1dulvuc/edit"},
+    {t:"How to: Exam Review", u:G+"1Pd9VGnvWrY5CjPBnfxtg2pjeQqDpMmAuX8QZLG2dVWs"},
+    {t:"First week example slides", u:F+"1PoxFpTeT-SsfNf-88bWfWZ41FYS-cGBu"},
+    {t:"Supply requests", u:OLD+"supply-requests"}]},
+  {h:"Time off and pay", items:[
+    {t:"Request time off", u:"https://airtable.com/app6IEAIcyXgP3N9t/pagsTN0x0S5MXXykx/form"},
+    {t:"Subs needed", u:OLD+"time-off-pay/time-offsubs"},
+    {t:"Workday", u:"https://www.myworkday.com/wday/authgwy/gvsu/login.htmld"},
+    {t:"Pay information", u:OLD+"time-off-pay/pay-information"},
+    {t:"Incentive funds", u:"https://airtable.com/app6IEAIcyXgP3N9t/paglUuwmmhtWLNiw7/form"}]},
+  {h:"Program", items:[
+    {t:"Course coverage F26", u:"https://docs.google.com/spreadsheets/d/1rO7rk8E02tHL4vd0uQRWqR3gTK0LH34lkQIizcDbA80/edit"},
+    {t:"Pod assignments", u:OLD+"pod-meetings/pod-assignments-schedule"},
+    {t:"Observation sign up F26", u:"https://docs.google.com/spreadsheets/d/10UTQka2adfUJEgz-aM75brGmFtSty3dEeKkP4MYdnkI/edit"},
+    {t:"SLA leadership team", u:OLD+"pod-meetings/sla-leadership-team"},
+    {t:"Facilitator of the Month", u:"https://airtable.com/app6IEAIcyXgP3N9t/pageDIwqNywP7stYx/form"}]},
+  {h:"Training", items:[
+    {t:"F26 training slides", u:F+"1BPexuWb4dKCQCdWS2m_yDrkjEdJuu2BZ"},
+    {t:"How to videos", u:F+"12wd3ZCvmsv5RK9qqmqdHur2Kz31r32nZ"},
+    {t:"Sample facilitator folder", u:F+"14vjradvybP364u_rIWCDcEdVEmFXH7FJ"},
+    {t:"Welcome email example", u:G+"1QUsx2T4OywgoQu_XLorhiu2rhT_a6WbmbGB_zTA3Rso"},
+    {t:"Example SLA syllabus", u:G+"1whN4xq-IGhEvxbNLcH1ycICO3BPrqZbx5CXU5GDSxn4"},
+    {t:"Advice from SLA faculty", u:"https://drive.google.com/file/d/1JWYef2vwWA7OOIpO26tlXNWciQfaHHHx/view"}]},
+  {h:"For students", items:[
+    {t:"Study strategy decks", u:F+"17R-Awe6UetCp7JzC0tfhnPUtJi351jyd"},
+    {t:"Exam prep tips", s:"handout", u:"https://drive.google.com/file/d/1ZsVqkWDx7SMcJVMRk2Ht84FRsUULoHwb/view"},
+    {t:"GV support resources", u:"https://www.gvsu.edu/support"},
+    {t:"Tutoring website", u:"https://www.gvsu.edu/tutoring"}]},
+  {h:"Leadership team", lt:1, items:[
+    {t:"Peer Mentor and CL training", u:F+"1bOCKQo8vcCWg-XvFbB6JXVozI7iIJ_9X"},
+    {t:"Pod meeting materials", u:F+"1KIEjEJyzVx86GN8EEFWpv6E5BK_vnofz"},
+    {t:"Observation forms", u:F+"198sdxpazJ5Petwv_x5vu88lH3Jov2KJI"},
+    {t:"SLA project tracker", u:"https://docs.google.com/spreadsheets/d/1F1hcg2uQ5FWrFODJTug0I76DSNkWs50Qwke9vheH9a0/edit"},
+    {t:"Training F26 folder", u:F+"1BPexuWb4dKCQCdWS2m_yDrkjEdJuu2BZ"}]}
+];
+const CHECKLISTS = {1:"19p87xDwKho7jjJu5tIGc_HcK38HCPI3tQcZNQLu11l8",2:"18gZ5Xv7xi6mhZLHnr-bmqFNQG-z3-Cc-UHeg3uuyAMc",3:"1idxolOL0hGeccFacwO9ULVt1r5XRgCrcK70HEa2Xj9A",4:"1vBOFCxil0CYbvtioRzXfdwfwGUoUmz9ktxqdlplMt90",5:"1Rwe6KCaAvfiTLQbG-NUyV8w6Ec7YE-rhXt5ZHAk1AM4",6:"1bSXOPut47zRIPG50FAes4HY6CpwKPo80OBqR-OazH1Q",7:"1gjrFbfftFoiwBafKGjcMf71enwnT4M27rbJw7Ikmzf0",8:"1u_2BcJWEJU0dUsmjVJd-OEM7bkIZ-gYz1V-iPUzxbag",10:"1NcbPGtv0PSOmku2zzHwdYzjgImAKognlRW6h03GButY",11:"1wdrlnXp-KuMmxi8_ZnC8Zaz1vcXpMC0UKs3oAujBPIQ",13:"1U73sZWDTJQ9lSZ53uY59yaVll6KksFTNM1QhbWVO0p0"};
+
+/* ===================== RENDERING ===================== */
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ext=u=>u.startsWith("#")||u.startsWith("mailto")?"":' target="_blank" rel="noopener"';
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const ICON={check:'<path d="M20 6 9 17l-5-5"/>',nav:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',doc:'<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',grid:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/>'};
+const svg=k=>`<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg>`;
+
+/* week */
+const start=new Date(SEMESTER.start+"T00:00:00"), now=new Date();
+const wk=Math.min(Math.max(Math.floor((now-start)/(7*864e5))+1,1),SEMESTER.weeks);
+
+/* quick links */
+document.getElementById("quick").innerHTML=QUICK.map(q=>`<a class="q${q.admin?" admin":""}" href="${q.u}" target="_blank" rel="noopener">${svg(q.i)}<b>${esc(q.t)}</b><small>${esc(q.s)}</small></a>`).join("");
+
+/* this week */
+const C=CHECKLIST;
+document.getElementById("wkNum").textContent=`Week ${C.week}`;
+document.getElementById("wkDates").textContent=C.dates;
+document.getElementById("wkTag").textContent=C.tag;
+document.getElementById("wkBody").innerHTML=C.sections.map(s=>`<h4>${esc(s.h)}</h4><ul>${s.items.map(i=>`<li${i.due?' class="due"':""}><span>${i.t}</span></li>`).join("")}</ul>`).join("");
+document.getElementById("wkLink").href=G+C.doc;
+
+/* idea bank */
+let purpose=null, ideaAll=false;
+const pEl=document.getElementById("purposes"), iq=document.getElementById("iq"), noTech=document.getElementById("noTech");
+const drawP=()=>pEl.innerHTML=["All",...PURPOSES].map(p=>`<button class="chip" aria-pressed="${(p==="All"&&!purpose)||p===purpose}" data-p="${p}">${p}</button>`).join("");
+function drawIdeas(){
+  const q=iq.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const hit=IDEAS.filter(i=>(!purpose||i.p===purpose)&&(!noTech.checked||!i.x)&&q.every(w=>(i.n+" "+i.d+" "+i.s+" "+i.p).toLowerCase().includes(w)));
+  const limit=(ideaAll||purpose||q.length)?hit.length:9;
+  const shown=hit.slice(0,limit);
+  document.getElementById("ideaGrid").innerHTML=shown.map(i=>`<a class="idea" href="${i.u}" target="_blank" rel="noopener"><span class="tag">${esc(i.p)}<i>${i.x?"Tech":"No tech"}</i></span><b>${esc(i.n)}</b><p>${esc(i.d)}</p><small>${esc(i.s)}</small></a>`).join("")||'<p style="color:var(--text-2)">No activities match. Try a broader word.</p>';
+  document.getElementById("ideaShown").textContent=`Showing ${shown.length} of ${hit.length}`;
+  const m=document.getElementById("ideaMore"); m.hidden=hit.length<=9||purpose||q.length; m.textContent=ideaAll?"Show fewer":`Show all ${hit.length}`;
+}
+document.getElementById("ideaCount").textContent=`${IDEAS.length} activities`;
+pEl.addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;purpose=b.dataset.p==="All"?null:b.dataset.p;drawP();drawIdeas();});
+iq.addEventListener("input",drawIdeas); noTech.addEventListener("change",drawIdeas);
+document.getElementById("ideaMore").addEventListener("click",()=>{ideaAll=!ideaAll;drawIdeas();});
+drawP(); drawIdeas();
+
+/* library */
+const courses=[...new Set(LIBRARY.map(r=>r.c))].sort();
+let course=store.get("sla-course"); if(!courses.includes(course)) course=courses[0];
+let showAll=false;
+const cEl=document.getElementById("courses"), starOnly=document.getElementById("starOnly");
+const drawC=()=>cEl.innerHTML=courses.map(c=>`<button class="chip" aria-pressed="${c===course}" data-c="${c}">${c}</button>`).join("");
+function drawLib(){
+  const rows=LIBRARY.filter(r=>r.c===course&&(!starOnly.checked||r.f));
+  const by={}; rows.forEach(r=>(by[r.w]=by[r.w]||[]).push(r));
+  const all=Object.keys(by).map(Number).sort((a,b)=>a-b);
+  const near=all.filter(w=>w>=wk-1&&w<=wk+2);
+  const ws=(!showAll&&!starOnly.checked&&near.length)?near:all;
+  document.getElementById("weeks").innerHTML=ws.map(w=>`<div class="wk${w===wk?" now":""}"><div class="wn">Week ${w}${w===wk?"<small>This week</small>":""}</div><ul>${by[w].sort((a,b)=>b.f-a.f).map(r=>`<li><a href="${r.u}" target="_blank" rel="noopener">${r.f?'<span class="star" aria-label="Starred">★</span>':""}<span class="t">${esc(r.t)}</span><span class="m">${r.s}</span></a></li>`).join("")}</ul></div>`).join("")||'<p style="color:var(--text-2)">Nothing starred yet for this course.</p>';
+  const b=document.getElementById("allWeeks"); b.hidden=starOnly.checked||(all.length===ws.length&&!showAll); b.textContent=showAll?"Weeks around now":`All ${all.length} weeks`;
+}
+cEl.addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;course=b.dataset.c;store.set("sla-course",course);drawC();drawLib();});
+starOnly.addEventListener("change",drawLib);
+document.getElementById("allWeeks").addEventListener("click",()=>{showAll=!showAll;drawLib();});
+drawC(); drawLib();
+
+/* directory */
+DIRECTORY.forEach(g=>{if(g.items==="CHECKLISTS")g.items=Object.keys(CHECKLISTS).map(Number).sort((a,b)=>b-a).slice(0,6).map(n=>({t:`Week ${n}`,s:n===wk?"this week":"",u:G+CHECKLISTS[n]})).concat([{t:"All checklists",u:OLD+"core-procedures/weekly-checklists"}]);});
+document.getElementById("cols").innerHTML=DIRECTORY.map(g=>`<div class="col"><h3>${esc(g.h)}</h3><ul>${g.items.map(i=>`<li><a href="${i.u}"${ext(i.u)}>${esc(i.t)}${i.s?`<small>${esc(i.s)}</small>`:""}</a></li>`).join("")}</ul></div>`).join("");
+
+/* search */
+const INDEX=[
+  ...QUICK.map(q=>({t:q.t,d:"Quick link",u:q.u})),
+  ...DIRECTORY.flatMap(g=>g.items.map(i=>({t:i.t,d:g.h,u:i.u}))),
+  ...IDEAS.map(i=>({t:i.n,d:`Idea \\ ${i.p}`,u:i.u,x:i.d})),
+  ...LIBRARY.map(r=>({t:`${r.c} Week ${r.w}: ${r.t}`,d:"Past session",u:r.u}))
+];
+const dlg=document.getElementById("search"), sq=document.getElementById("sq"), res=document.getElementById("results"); let sel=0;
+function drawRes(){
+  const q=sq.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const hits=q.length?INDEX.filter(x=>q.every(w=>(x.t+" "+x.d+" "+(x.x||"")).toLowerCase().includes(w))).slice(0,30):[];
+  sel=0;
+  res.innerHTML=!q.length?'<li class="none">Try "time off", "kahoot", or a topic like "logs".</li>':hits.length?hits.map((h,i)=>`<li><a href="${h.u}"${ext(h.u)} class="${i?"":"sel"}">${esc(h.t)}<small>${esc(h.d)}</small></a></li>`).join(""):'<li class="none">Nothing found. Try a simpler word.</li>';
+}
+const openSearch=()=>{dlg.showModal();sq.value="";drawRes();sq.focus();};
+document.getElementById("openSearch").addEventListener("click",openSearch);
+sq.addEventListener("input",drawRes);
+sq.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){e.preventDefault();dlg.close();return;}
+  const a=[...res.querySelectorAll("a")]; if(!a.length) return;
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();a[sel].classList.remove("sel");sel=(sel+(e.key==="ArrowDown"?1:-1)+a.length)%a.length;a[sel].classList.add("sel");a[sel].scrollIntoView({block:"nearest"});}
+  if(e.key==="Enter"){a[sel].click();dlg.close();}
+});
+res.addEventListener("click",e=>{if(e.target.closest("a"))dlg.close();});
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close();});
+document.addEventListener("keydown",e=>{if(e.key==="/"&&!dlg.open&&!(document.activeElement.matches("textarea,input[type=search],input[type=text],input:not([type])"))){e.preventDefault();openSearch();}});
+</script>
+</body>
+</html>
